@@ -7,9 +7,9 @@ from unittest.mock import MagicMock, PropertyMock, create_autospec, patch
 
 import pytest
 
-from greeclimate.device import DeviceInfo
-from greeclimate.discovery import Discovery, Listener
-from greeclimate.network import DatagramStream, DeviceProtocol2
+from greefan.device import DeviceInfo
+from greefan.discovery import Discovery, Listener
+from greefan.network import DatagramStream, DeviceProtocol2
 
 from .common import (
     DEFAULT_TIMEOUT,

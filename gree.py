@@ -2,8 +2,8 @@ import argparse
 import asyncio
 import logging
 
-from greeclimate.device import Device, DeviceInfo
-from greeclimate.discovery import Discovery, Listener
+from greefan.device import Device, DeviceInfo
+from greefan.discovery import Discovery, Listener
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(name)s - %(levelname)s - %(message)s"

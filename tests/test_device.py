@@ -4,9 +4,9 @@ from unittest.mock import patch
 
 import pytest
 
-from greeclimate.device import Device, DeviceInfo, Props, TemperatureUnits
-from greeclimate.discovery import Discovery
-from greeclimate.exceptions import DeviceNotBoundError, DeviceTimeoutError
+from greefan.device import Device, DeviceInfo, Props, TemperatureUnits
+from greefan.discovery import Discovery
+from greefan.exceptions import DeviceNotBoundError, DeviceTimeoutError
 
 
 class FakeProps(enum.Enum):
@@ -187,7 +187,7 @@ def test_device_info_equality():
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.bind_device")
+@patch("greefan.network.bind_device")
 async def test_get_device_info(mock_bind):
     """Initialize device, check properties."""
 
@@ -203,7 +203,7 @@ async def test_get_device_info(mock_bind):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.bind_device")
+@patch("greefan.network.bind_device")
 async def test_device_bind(mock_bind):
     """Check that the device returns a device key when binding."""
 
@@ -220,7 +220,7 @@ async def test_device_bind(mock_bind):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.bind_device")
+@patch("greefan.network.bind_device")
 async def test_device_bind_timeout(mock_bind):
     """Check that the device handles timeout errors when binding."""
 
@@ -238,7 +238,7 @@ async def test_device_bind_timeout(mock_bind):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.bind_device")
+@patch("greefan.network.bind_device")
 async def test_device_bind_none(mock_bind):
     """Check that the device handles bad binding sequences."""
 
@@ -256,9 +256,9 @@ async def test_device_bind_none(mock_bind):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.bind_device")
-@patch("greeclimate.network.request_state")
-@patch("greeclimate.network.send_state")
+@patch("greefan.network.bind_device")
+@patch("greefan.network.request_state")
+@patch("greefan.network.send_state")
 async def test_device_late_bind(mock_push, mock_update, mock_bind):
     """Check that the device handles late binding sequences."""
     fake_key = "abcdefgh12345678"
@@ -280,7 +280,7 @@ async def test_device_late_bind(mock_push, mock_update, mock_bind):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.request_state")
 async def test_update_properties(mock_request):
     """Check that properties can be updates."""
     mock_request.return_value = get_mock_state()
@@ -297,7 +297,7 @@ async def test_update_properties(mock_request):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.request_state", side_effect=asyncio.TimeoutError)
+@patch("greefan.network.request_state", side_effect=asyncio.TimeoutError)
 async def test_update_properties_timeout(mock_request):
     """Check that timeouts are handled when properties are updates."""
     mock_request.return_value = get_mock_state()
@@ -311,7 +311,7 @@ async def test_update_properties_timeout(mock_request):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.send_state")
+@patch("greefan.network.send_state")
 async def test_set_properties_not_dirty(mock_request):
     """Check that teh state isn't pushed when properties unchanged."""
     device = await generate_device_mock_async()
@@ -322,7 +322,7 @@ async def test_set_properties_not_dirty(mock_request):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.send_state")
+@patch("greefan.network.send_state")
 async def test_set_properties(mock_request):
     """Check that state is pushed when properties are updated."""
     device = await generate_device_mock_async()
@@ -367,7 +367,7 @@ async def test_set_properties(mock_request):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.send_state", side_effect=asyncio.TimeoutError)
+@patch("greefan.network.send_state", side_effect=asyncio.TimeoutError)
 async def test_set_properties_timeout(mock_request):
     """Check timeout handling when pushing state changes."""
     device = await generate_device_mock_async()
@@ -423,7 +423,7 @@ async def test_uninitialized_properties():
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.request_state")
 async def test_update_current_temp_unsupported(mock_request):
     """Check that properties can be updates."""
     mock_request.return_value = get_mock_state_no_temperature()
@@ -447,7 +447,7 @@ async def test_update_current_temp_unsupported(mock_request):
         (62, "362001061147+U-ZX6045RV1.01.bin"),
     ],
 )
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.request_state")
 async def test_update_current_temp_v3(mock_request, temsen, hid):
     """Check that properties can be updates."""
     mock_request.return_value = {"TemSen": temsen, "hid": hid}
@@ -472,7 +472,7 @@ async def test_update_current_temp_v3(mock_request, temsen, hid):
         (23, "362001061217+U-W04NV7.bin"),
     ],
 )
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.request_state")
 async def test_update_current_temp_v4(mock_request, temsen, hid):
     """Check that properties can be updates."""
     mock_request.return_value = {"TemSen": temsen, "hid": hid}
@@ -488,7 +488,7 @@ async def test_update_current_temp_v4(mock_request, temsen, hid):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.request_state")
 async def test_update_current_temp_bad(mock_request):
     """Check that properties can be updates."""
     mock_request.return_value = get_mock_state_bad_temp()
@@ -503,7 +503,7 @@ async def test_update_current_temp_bad(mock_request):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.request_state")
 async def test_update_current_temp_0C_v4(mock_request):
     """Check that properties can be updates."""
     mock_request.return_value = get_mock_state_0c_v4_temp()
@@ -518,7 +518,7 @@ async def test_update_current_temp_0C_v4(mock_request):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.request_state")
 async def test_update_current_temp_0C_v3(mock_request):
     """Check for devices without a temperature sensor."""
     mock_request.return_value = get_mock_state_0c_v3_temp()
@@ -534,8 +534,8 @@ async def test_update_current_temp_0C_v3(mock_request):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("temperature", [18, 19, 20, 21, 22])
-@patch("greeclimate.network.send_state")
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.send_state")
+@patch("greefan.network.request_state")
 async def test_send_temperature_celsius(mock_request, mock_push, temperature):
     """Check that temperature is set and read properly in C."""
     state = get_mock_state()
@@ -564,8 +564,8 @@ async def test_send_temperature_celsius(mock_request, mock_push, temperature):
 @pytest.mark.parametrize(
     "temperature", [60, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 86]
 )
-@patch("greeclimate.network.send_state")
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.send_state")
+@patch("greefan.network.request_state")
 async def test_send_temperature_farenheit(mock_request, mock_push, temperature):
     """Check that temperature is set and read properly in F."""
     temSet = round((temperature - 32.0) * 5.0 / 9.0)
@@ -642,7 +642,7 @@ async def test_send_temperature_out_of_range_farenheit_get(temperature):
 
 
 @pytest.mark.asyncio
-@patch("greeclimate.network.send_state")
+@patch("greefan.network.send_state")
 async def test_enable_disable_sleep_mode(mock_request):
     """Check that properties can be updates."""
     device = await generate_device_mock_async()
@@ -667,8 +667,8 @@ async def test_enable_disable_sleep_mode(mock_request):
 @pytest.mark.parametrize(
     "temperature", [59, 77, 86]
 )
-@patch("greeclimate.network.send_state")
-@patch("greeclimate.network.request_state")
+@patch("greefan.network.send_state")
+@patch("greefan.network.request_state")
 async def test_mismatch_temrec_farenheit(mock_request, mock_push, temperature):
     """Check that temperature is set and read properly in F."""
     temSet = round((temperature - 32.0) * 5.0 / 9.0)

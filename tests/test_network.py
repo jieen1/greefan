@@ -6,7 +6,7 @@ from unittest.mock import create_autospec, patch
 
 import pytest
 
-from greeclimate.network import (
+from greefan.network import (
     BroadcastListenerProtocol,
     DatagramStream,
     DeviceProtocol,

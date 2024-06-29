@@ -7,8 +7,8 @@ from asyncio.events import AbstractEventLoop
 from ipaddress import IPv4Address
 from typing import Coroutine, List
 
-from greeclimate.device import DeviceInfo
-from greeclimate.network import BroadcastListenerProtocol, IPAddr
+from greefan.device import DeviceInfo
+from greefan.network import BroadcastListenerProtocol, IPAddr
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -3,7 +3,7 @@ import socket
 from socket import SOCK_DGRAM
 from unittest.mock import Mock, create_autospec, patch
 
-from greeclimate.network import DeviceProtocol2
+from greefan.network import DeviceProtocol2
 
 DEFAULT_TIMEOUT = 5
 DISCOVERY_REQUEST = {"t": "scan"}
